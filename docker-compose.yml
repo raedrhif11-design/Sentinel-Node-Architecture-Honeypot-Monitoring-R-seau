@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  sentinel-node:
+    build: .
+    container_name: sentinel_honeypot
+    ports:
+      - "2222:2222"
+      - "8080:8080"
+    volumes:
+      - ./logs:/app/logs
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: sentinel_grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    restart: unless-stopped
